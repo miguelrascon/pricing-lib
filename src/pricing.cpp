@@ -32,4 +32,12 @@ namespace pricing{
     double bs_put(const BSParams& params){
         return params.strike * std::exp(-params.rate * params.time) * math::norm_cdf(-d2(params)) - params.spot * math::norm_cdf(-d1(params));
     };
+
+    double delta_call(const BSParams& params){
+        return math::norm_cdf(d1(params));
+    }
+
+    double delta_put(const BSParams& params){
+        return math::norm_cdf(d1(params)) - 1;
+    }
 }

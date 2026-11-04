@@ -18,4 +18,7 @@ namespace pricing{
     double d2(const BSParams& params);
     double bs_call(const BSParams& params);
     double bs_put(const BSParams& params);
+
+    double delta_call(const BSParams& params);
+    double delta_put(const BSParams& params);
 }
