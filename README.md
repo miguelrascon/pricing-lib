@@ -4,4 +4,4 @@ A modern C++ quantitative finance library built to implement standard pricing mo
 
 ## Author 
 
-Miguel Rascón Ramiro (mihuit08@gmail.com)
+Miguel Rascón Ramiro (miguelrasconramiro@gmail.com)
