@@ -16,6 +16,18 @@ TEST_CASE("Black-Scholes Call Price matches Hull", "[analytic]"){
 
     REQUIRE(call_price == Catch::Approx(10.4506).epsilon(0.0001));
 
+    double put_price = pricing::bs_put(params);
+    REQUIRE(put_price == Catch::Approx(5.5735).epsilon(0.0001));
+
+    // Put call parity: C - P = S - K * exp(-r * T)
+    REQUIRE(call_price - put_price == Catch::Approx(params.spot - params.strike * std::exp(-params.rate * params.time)).epsilon(0.0001));
+
+}
+
+TEST_CASE("Black-Scholes Delta matches Hull", "[analytic]"){
+    
+    pricing::BSParams params = {100.0, 100.0, 0.05, 0.2, 1.0};
+
     double call_delta = pricing::delta_call(params);
     REQUIRE(call_delta == Catch::Approx(0.6368).epsilon(0.0001));
 
@@ -23,5 +35,5 @@ TEST_CASE("Black-Scholes Call Price matches Hull", "[analytic]"){
     REQUIRE(put_delta == Catch::Approx(-0.3632).epsilon(0.0001));
 
     REQUIRE(call_delta - put_delta == Catch::Approx(1.0).epsilon(0.0001));
-    
+
 }
