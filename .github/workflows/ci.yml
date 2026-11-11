@@ -1,0 +1,35 @@
+# Integración continua: en cada push o pull request a main, GitHub compila la
+# librería y ejecuta los tests en tres sistemas operativos con tres compiladores
+# distintos (GCC, MSVC y Clang). Si algo falla, el commit aparece en rojo.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    strategy:
+      # Si falla un sistema, que sigan los demás para ver todos los errores.
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure
+        # Warnings como errores: en CI no se tolera código que genere avisos.
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DPRICING_WARNINGS_AS_ERRORS=ON
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Test
+        working-directory: build
+        run: ctest -C Release --output-on-failure
