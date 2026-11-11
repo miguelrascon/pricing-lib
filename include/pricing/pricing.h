@@ -11,6 +11,7 @@ namespace pricing {
         double rate;    // r: tipo libre de riesgo, compuesto en continuo (puede ser negativo)
         double vol;     // sigma: volatilidad anualizada (>= 0)
         double time;    // T: tiempo hasta vencimiento en años (>= 0)
+        double q=0.0;       // Continuous diviend yield (annualised) (finite)
     };
 
     // Comprueba que los parámetros son válidos.
@@ -24,7 +25,7 @@ namespace pricing {
     double d2(const BSParams& params);
 
     // Precios de opciones europeas. Admiten los casos límite T = 0 y vol = 0,
-    // en los que devuelven el valor intrínseco descontado max(S - K e^{-rT}, 0).
+    // en los que devuelven el valor intrínseco descontado max(Se^{-qT} - K e^{-rT}, 0).
     double bs_call(const BSParams& params);
     double bs_put(const BSParams& params);
 
