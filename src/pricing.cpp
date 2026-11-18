@@ -53,7 +53,7 @@ namespace pricing {
     // (movimiento browniano geométrico) mediante el lema de Itô y valorar bajo la
     // medida riesgo-neutral:
     //   - N(d2) es la probabilidad riesgo-neutral de que el call termine dentro del dinero.
-    //   - N(d1) es la delta del call: sensibilidad del precio del call al subyacente.
+    //   - N(d1) es la delta del call: sensibilidad del precio del call al subyacente (N(d1) * e^{-qT}).
     // TODO(q): the last bullet is no longer exact. With dividends the call delta is
     //   e^{-qT} N(d1), not N(d1). N(d1) alone is now the delta with respect to the
     //   prepaid forward S e^{-qT}. Update it so the comment matches delta_call().
